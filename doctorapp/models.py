@@ -2,18 +2,30 @@ from django.db import models
 from django.contrib.auth.models import User
 from patientapp.models import Patient
 from django.contrib.auth.models import AbstractUser
+import datetime
 
 
 class Doctor(AbstractUser):
-	name = models.CharField(max_length=40)
-	phone = models.CharField(max_length=12,default="",unique=True)
-	gender = models.CharField(max_length=30)
-	address = models.CharField(max_length=200)
-	date_of_birth = models.DateField()
-	blood = models.CharField(max_length=10)
+	GENDER = ((0, 'Male'), (1, 'Female'))
+	BLOOD = (
+		(0, "A+"),
+		(1, "A-"),
+		(2, "B+"),
+		(3, "B-"),
+		(4, "AB+"),
+		(5, "AB-"),
+		(6, "O+"),
+  		(7, "O-"),
+	)
+	phone = models.CharField(max_length=10,default="")
+	gender = models.CharField(max_length=6, choices=GENDER)
+	address = models.CharField(max_length=200, default="")
+	date_of_birth = models.DateField(null=True, blank=True)
+	blood = models.CharField(max_length=3, choices=BLOOD)
 	status = models.BooleanField(default = 0)
 	department = models.CharField(max_length=30 , default = "")
 	salary = models.IntegerField(default = 10000)
+	
 	
 
 # Ordonnance
